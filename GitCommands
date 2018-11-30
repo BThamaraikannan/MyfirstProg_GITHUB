@@ -1,0 +1,24 @@
+Git Internals and data recovery
+================================
+https://git-scm.com/book/en/v2/Git-Internals-Maintenance-and-Data-Recovery 
+
+command to see how much space you’re using in a directory
+==========================================================
+git count-objects -v
+
+command to see which file uses more space
+===========================================
+git verify-pack -v
+(the o/p will have SHA ID's and size) 
+to get the file which consumes more space is we need to use the below command after verify-pack command
+
+git rev-list --objects --all | grep <sha id>
+
+to get the log in one line
+============================
+git log --pretty=oneline
+
+
+
+
+
