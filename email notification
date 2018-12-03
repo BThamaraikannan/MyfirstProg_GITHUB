@@ -1,0 +1,5 @@
+email notification use below
+
+- Email-ext plugin
+- Email-ext Template Plugin
+- Build User Vars Plugin [to get the user who triggered the build]
