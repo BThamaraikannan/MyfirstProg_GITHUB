@@ -1,5 +1,5 @@
 1. Join
-=====
+========
 This plugin allows a job to be run after all the immediate downstream jobs have completed. 
 In this way, the execution can branch out and perform many steps in parallel, 
 and then run a final aggregation step just once after all the parallel work is finished. 
@@ -7,6 +7,13 @@ This plugin is useful for creating a diamond shape project dependency.
 This means there is a single parent job that starts several downstream jobs. 
 Once those jobs are finished, a single aggregation job runs. 
 Unfortunately, more complex interactions are not possible with this plugin.
+
+https://plugins.jenkins.io/build-monitor-plugin - Build monitor plugin -> to visualize the jenkins jobs/CI-CD pipeline/s in TV screens
+
+Copy Artifact plugin - To copy the artifacts of one build job to another build job [After installing this plugin, 
+we can have this it in build section of jenkins job "copy artifacts from another project"]
+
+Email Extension plugin - This plugin is a replacement for Jenkins's email publisher. This is more advanced plugin with better features for sending build status messages. Please make sure you set up very granular and effective means of communication to the relevant team members, rather than whole team.
 
 https://zeroturnaround.com/rebellabs/top-10-jenkins-featuresplugins/ 
 
