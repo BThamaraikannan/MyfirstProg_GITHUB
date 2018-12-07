@@ -1,0 +1,13 @@
+1. Join
+=====
+This plugin allows a job to be run after all the immediate downstream jobs have completed. 
+In this way, the execution can branch out and perform many steps in parallel, 
+and then run a final aggregation step just once after all the parallel work is finished. 
+This plugin is useful for creating a diamond shape project dependency. 
+This means there is a single parent job that starts several downstream jobs. 
+Once those jobs are finished, a single aggregation job runs. 
+Unfortunately, more complex interactions are not possible with this plugin.
+
+https://zeroturnaround.com/rebellabs/top-10-jenkins-featuresplugins/ 
+
+https://devops.com/15-must-jenkins-plugins-increase-productivity/
