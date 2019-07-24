@@ -1,0 +1,49 @@
+parallel build0: {
+    currentBuild.displayName = "${currentBuild.displayName} ${BRANCH}"
+    stage ('Build for 12.04') 
+    {
+        build job: 'lin32-12.04-branch-release', parameters: [
+		string(name: 'BRANCH', value: "${BRANCH}"), 
+		]
+    }
+}, build1: {
+    stage ('Build for 14.04') 
+    {
+        build job: 'lin32-14.04-branch-release', parameters: [
+		string(name: 'BRANCH', value: "${BRANCH}"), 
+		]
+
+    }
+}, build2: {
+    stage ('Build for 6.06') 
+    {
+        build job: 'lin32-6.06-branch-release', parameters: [
+		string(name: 'BRANCH', value: "${BRANCH}"), 
+		]
+
+    }
+}, build3: {
+    stage ('Build for A5N6') 
+    {
+        build job: 'lin32-A5N6-branch-release', parameters: [
+		string(name: 'BRANCH', value: "${BRANCH}"), 
+		]
+
+    }
+}, build4: {
+    stage ('Build for 16.04') 
+    {
+        build job: 'lin64-16.04-branch-release', parameters: [
+		string(name: 'BRANCH', value: "${BRANCH}"), 
+		]
+
+    }
+}, build5: {
+    stage ('Build for Win32') 
+    {
+        build job: 'win32-win7-sp1-vs12-branch-release', parameters: [
+		string(name: 'BRANCH', value: "${BRANCH}"), 
+		]
+
+    }
+} 

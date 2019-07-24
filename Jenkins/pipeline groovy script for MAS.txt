@@ -1,0 +1,45 @@
+pipeline {
+    agent 
+
+    stages {
+        stage('Build') { (2)
+            steps { (3)
+                sh 'make' (4)
+            }
+        }
+        stage('Test'){
+            steps {
+                sh 'make check'
+                junit 'reports/**/*.xml' (5)
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh 'make publish'
+            }
+        }
+    }
+}
+
+===========================================================================================================================================================
+
+parallel build: {
+    stage ('Build for Steer tune') 
+    {
+        build job: 'SteerTune-win32-X.YY.ZZ.i-release', parameters: [
+		string(name: 'PARTNUMBER', value: '515-0755-160.0'), 
+		string(name: 'BRANCH', value: '2_10_160_0_L4'), 
+		string(name: 'BUILD_NAME', value: '${BRANCH}'), 
+		string(name: 'STEER_VERSION', value: '2.10.160.0')]
+    }
+}, test: {
+    stage ('Build for video') 
+    {
+        build job: 'lin32-12.04-X.YY.ZZ.i-release', parameters: [
+		string(name: 'PART_NUMBER', value: '515-0755-160.0'), 
+		string(name: 'BRANCH', value: '2_10_160_0_L4'), 
+		string(name: 'BUILD_NAME', value: '${BRANCH}'), 
+		string(name: 'TMAC_BRANCH', value: '*/master')]
+
+    }
+}

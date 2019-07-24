@@ -1,0 +1,109 @@
+def tasks = [:]
+
+// def release_id = MAS_RELEASE_ID
+// 
+// def version_major = "2"
+// def version_minor = "10"
+// 
+// //Git Tag Name
+// def git_tag = "${version_major}_${version_minor}_${MAS_RELEASE_ID}_${MAS_RELEASE_REVISION_ID}_L4"
+// 
+// //Version Number
+// def version_prefix = "${version_major}.${version_minor}."
+// def full_version_number = "${version_prefix}${MAS_RELEASE_ID}.${MAS_RELEASE_REVISION_ID}"
+// 
+// //Cat Part Number
+// def cat_base_part_number = "515-0755-"
+// def full_cat_part_number = "${cat_base_part_number}${MAS_RELEASE_ID}.${MAS_RELEASE_REVISION_ID}"
+// 
+currentBuild.displayName = "${currentBuild.displayName} ${BRANCH}"
+// 
+// echo "Building release ${full_version_number} / ${full_cat_part_number} from git tag ${git_tag}"
+// 
+
+// 
+tasks["Siteserver 16.04"] = {
+    stage ("Siteserver 16.04") {
+        node ( "ubuntu160403" ) {
+            build job: 'lin64-16.04-branch-release', parameters: [
+              //string(name:'PART_NUMBER_MAS', value: full_cat_part_number),
+              //string(name:'SW_MAJOR_VERSION', value: version_minor), //Note that this parameter indicates the x in 2.x.56.0 - major is used incorrectly in the build job
+              //string(name:'SW_SUB_VERSION', value: release_id),
+              //string(name:'PART_NUMBER_WEB', value: full_cat_part_number),
+              string(name:'BRANCH', value: "${BRANCH}")]
+        }
+    }
+}
+// 
+tasks["Remote Operator Station 14.04"] = {
+    stage ("Remote Operator Station 14.04") {
+        node ( "1404" ) {
+            build job: "lin32-14.04-branch-release", parameters: [
+              string(name:'BRANCH', value: "${BRANCH}")]
+        }
+    }
+}
+// 
+// tasks["Software Manager"] = {
+//     stage ("Software Manager") {
+//         node ( "cfumanager" ) {
+//             build job: "SoftwareManager-win32-X.YY.ZZ.i-release", parameters: [
+//               string(name:'PART_NUMBER', value:full_cat_part_number),
+//               string(name:'BRANCH', value: git_tag)]
+//         }
+//     }
+// }
+// 
+tasks["Automation ECM 6.06"] = {
+    stage ("Automation ECM 6.06") {
+        node ( "aecm606" ) {
+            build job: "lin32-6.06-branch-release", parameters: [
+              string(name:'BRANCH', value: "${BRANCH}")]
+        }
+    }
+}
+
+tasks["Automation ECM 12.04"] = {
+    stage ("Automation ECM 12.04") {
+        node ( "aecm1204" ) {
+            build job: "lin32-12.04-branch-release", parameters: [
+              //string(name:'PART_NUMBER', value:full_cat_part_number),
+              string(name:'BRANCH', value: "${BRANCH}")]
+        }
+    }
+}
+// 
+tasks["Automation ECM A5N6"] = {
+    stage ("Automation ECM A5N6") {
+        node ( "A5N6" ) {
+            build job: "lin32-A5N6-branch-release", parameters: [
+              //string(name:'PART_NUMBER', value: full_cat_part_number),
+              //string(name:'SW_VERSION', value: full_version_number),
+              string(name:'BRANCH', value: "${BRANCH}")//,
+              //string(name:'SERVICES_VERSION', value: full_version_number)
+              ]
+        }
+    }
+}
+// 
+// tasks["Steer Tune"] = {
+//     stage ("Steer Tune") {
+//         node ( "steertune" ) {
+//             build job: "SteerTune-win32-X.YY.ZZ.i-release", parameters: [
+//               string(name:'BRANCH', value: git_tag)]
+//         }
+//     }
+// }
+// 
+tasks["AOS Win7 Visual Studio 12"] = {
+    stage ("AOS Win7 Visual Studio 12") {
+        node ( "Win7-SP1-BuildServer-01" ) {
+            build job: "win32-win7-sp1-vs12-branch-release", parameters: [
+              //string(name:'MAS_PART_NUMBER', value: full_cat_part_number),
+              //string(name:'MAP_PART_NUMBER', value: full_cat_part_number),
+              string(name:'BRANCH', value: "${BRANCH}")]
+        }
+    }
+}
+
+parallel tasks

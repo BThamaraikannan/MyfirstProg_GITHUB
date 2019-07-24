@@ -1,0 +1,35 @@
+parallel build: {
+    stage ('Build for Primary and Strategic screens') 
+    {
+        build job: 'ROS_Release_app', parameters: [string(name: 'MAJOR_VERSION_NUMBER', value: '4.5'), string(name: 'MINOR_VERSION_NUMBER', value: '109'), string(name: 'MINOR_SUB_VERSION_NUMBER', value: '-1'), string(name: 'BRANCH', value: 'origin/Development')]
+    }
+}, test: {
+    stage ('Build for video') 
+    {
+        build job: 'ROS_Development_app', parameters: [string(name: 'MAJOR_VERSION_NUMBER', value: '4.5'), string(name: 'MINOR_VERSION_NUMBER', value: '109'), string(name: 'MINOR_SUB_VERSION_NUMBER', value: '-1'), string(name: 'BRANCH', value: 'origin/Development')]
+    }
+}
+
+===========================================================================================================================================================
+
+pipeline {
+    agent none
+    stages {
+        stage('Run Build') {
+            parallel {
+                stage('Build for Primary and Strategic screens') {
+                    steps {
+                        build job: 'ROS_Release_app', parameters: [string(name: 'MAJOR_VERSION_NUMBER', value: '4.5'), string(name: 'MINOR_VERSION_NUMBER', value: '109'), string(name: 'MINOR_SUB_VERSION_NUMBER', value: '-1'), string(name: 'BRANCH', value: 'origin/Development')]
+                    }
+                    
+                }
+                stage('Build for video') {
+                    steps {
+                        build job: 'ROS_Development_app', parameters: [string(name: 'MAJOR_VERSION_NUMBER', value: '4.5'), string(name: 'MINOR_VERSION_NUMBER', value: '109'), string(name: 'MINOR_SUB_VERSION_NUMBER', value: '-1'), string(name: 'BRANCH', value: 'origin/Development')]
+                    }
+                    
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,4 @@
+Office 365 Connector Plugin - to connect with microsoft tools
+
+Build Monitor View - to display jenkins jobs in TV 
+
