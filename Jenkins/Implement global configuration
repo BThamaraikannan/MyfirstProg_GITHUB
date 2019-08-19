@@ -1,0 +1,7 @@
+If you want to implement global variable/s and to use it in Jenkins job
+
+Jenkins -> manage jenkins -> configure system -> Global properties -> add new variables and values
+This variable can be used anywhere in jenkins job
+
+For eg:- Email notification -> can create a variable name and value (email id's)
+no need to change in every job's if somebody left or some users to be added
